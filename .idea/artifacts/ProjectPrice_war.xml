@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ProjectPrice:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="priceloader-1.0.war">
+      <element id="artifact" artifact-name="ProjectPrice:war exploded" />
+    </root>
+  </artifact>
+</component>
