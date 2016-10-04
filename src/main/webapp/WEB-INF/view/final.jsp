@@ -13,15 +13,7 @@
 </head>
 <body>
 <div class="container">
-<form:form method="POST" commandName="user" action="good" class = "form-signin">
-	<h2 class="form-signin-heading">Please sign in</h2>
-	<form:input path="name" class = "form-control" placeholder="Name"/>
-	<form:input path="password" class = "form-control" placeholder="Password"/>
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-	<label>
-	<p class="message">Not registered? <a href="<c:url value="/registration"/>">Create an account</a></p>
-	</label>
-</form:form>
+Congratulations , you are have been Registered!
 </div>
 </body>
 </html>

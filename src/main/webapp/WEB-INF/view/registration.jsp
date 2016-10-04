@@ -9,18 +9,16 @@
 <link href="${start}" rel="stylesheet">
 <link href="${startertemplate}" rel="stylesheet" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Login Page</title>
+<title>Registration Page</title>
 </head>
 <body>
 <div class="container">
-<form:form method="POST" commandName="user" action="good" class = "form-signin">
-	<h2 class="form-signin-heading">Please sign in</h2>
+<form:form method="POST" commandName="user2" action="final" class = "form-signin">
+	<h2 class="form-signin-heading">Registration form</h2>
 	<form:input path="name" class = "form-control" placeholder="Name"/>
 	<form:input path="password" class = "form-control" placeholder="Password"/>
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-	<label>
-	<p class="message">Not registered? <a href="<c:url value="/registration"/>">Create an account</a></p>
-	</label>
+	<form:input path="email" class = "form-control" placeholder="email"/>
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form:form>
 </div>
 </body>

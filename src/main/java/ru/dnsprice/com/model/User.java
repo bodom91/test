@@ -1,11 +1,55 @@
 package ru.dnsprice.com.model;
 
+import javax.persistence.*;
+
 /**
  * Created by shestakov.m on 03.10.2016.
  */
+
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
+    @Column (name = "userid")
+    @GeneratedValue
+    private int userid;
+
+    @Column (name = "name")
     private String name;
+
+    @Column (name = "password")
     private String password;
+
+    public User() {
+    }
+
+    public User(int userid, String name, String password, String email) {
+        this.userid = userid;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
+
+    @Column (name = "email")
+
+    private String email;
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getName() {
         return name;
