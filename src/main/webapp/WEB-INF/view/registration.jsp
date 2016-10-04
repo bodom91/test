@@ -13,12 +13,15 @@
 </head>
 <body>
 <div class="container">
-<form:form method="POST" commandName="user2" action="final" class = "form-signin">
+<form:form method="POST" commandName="user" action="final" class = "form-signin">
 	<h2 class="form-signin-heading">Registration form</h2>
 	<form:input path="name" class = "form-control" placeholder="Name"/>
 	<form:input path="password" class = "form-control" placeholder="Password"/>
 	<form:input path="email" class = "form-control" placeholder="email"/>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+	<label>
+		<p class="message">Registered? <a href="<c:url value="/"/>">Log In</a></p>
+	</label>
 </form:form>
 </div>
 </body>

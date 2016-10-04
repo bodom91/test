@@ -21,18 +21,7 @@ public class User {
     @Column (name = "password")
     private String password;
 
-    public User() {
-    }
-
-    public User(int userid, String name, String password, String email) {
-        this.userid = userid;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-    }
-
     @Column (name = "email")
-
     private String email;
 
     public int getUserid() {

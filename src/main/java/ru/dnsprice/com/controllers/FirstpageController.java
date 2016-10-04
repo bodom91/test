@@ -31,4 +31,6 @@ public class FirstpageController {
             return new ModelAndView("good", "user", user);
         } else return new ModelAndView("fail");
     }
+
+
 }

@@ -13,7 +13,10 @@
 </head>
 <body>
 <div class="container">
-Congratulations , you are have been Registered!
+    <p class="alert alert-success" role="alert">Congratulations , you have been Registered!</p>
+    <label>
+        <p class="message"><a href="<c:url value="/"/>">Log In</a></p>
+    </label>
 </div>
 </body>
 </html>
