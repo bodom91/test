@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-    <p class="alert alert-success" role="alert">Congratulations , you have been Registered!</p>
+    <p class="alert alert-success" role="alert">Congratulations , you have been Registered! Login, please.</p>
     <label>
         <p class="message"><a href="<c:url value="/"/>">Log In</a></p>
     </label>

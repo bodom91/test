@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-<form:form method="POST" commandName="user" action="good" class = "form-signin">
+<form:form method="POST" modelAttribute="user" action="/homepage" class = "form-signin">
 	<h2 class="form-signin-heading">Please sign in</h2>
 	<form:input path="name" class = "form-control" placeholder="Name"/>
 	<form:input path="password" class = "form-control" placeholder="Password"/>

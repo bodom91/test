@@ -28,6 +28,15 @@ public class UserDAOImpl implements UserDAO {
         sessionFactory.getCurrentSession().save(user);
     }
 
+    public User getUserByName(String name) {
+        User user = (User) sessionFactory.getCurrentSession().createQuery("from User where name=:name")
+                .setParameter("name",name).uniqueResult();
+        if (user == null) {
+            return null;
+        }
+        return user;
+    }
+
     public List<User> listContact() {
         return sessionFactory.getCurrentSession().createQuery("from User")
                 .list();
@@ -39,17 +48,13 @@ public class UserDAOImpl implements UserDAO {
         if (null != user) {
             sessionFactory.getCurrentSession().delete(user);
         }
-
     }
 
     public boolean checkUser(User user) {
-        List<User> users = listContact();
-        User userBD = null;
+        User userBD = getUserByName(user.getName());
         try {
-            for (User listUser : users) {
-                if (listUser.getName().equals(user.getName()))
-                    userBD = listUser;
-            } if (passToHash.matches(user.getPassword(),userBD.getPassword())) {
+
+            if (passToHash.matches(user.getPassword(),userBD.getPassword())) {
                 return true;
             } else return false;
         } catch (NullPointerException e) {

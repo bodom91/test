@@ -1,4 +1,6 @@
 <web-app>
+
+    <!--Подключаем ДиспатчерСервлет для всех запросов-->
     <servlet>
         <servlet-name>action</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -10,6 +12,12 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--Добавляем кастомную страницу для ошибок-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404</location>
+    </error-page>
+
     <!--Добавляем фильтр безопасности для всего приложения  (прочитать)-->
     <!--<filter>-->
         <!--<filter-name>springSecurityFilterChain</filter-name>-->
@@ -19,12 +27,5 @@
         <!--<filter-name>springSecurityFilterChain</filter-name>-->
         <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
-
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            /WEB-INF/spring/root-context.xml
-        </param-value>
-    </context-param>
 
 </web-app>

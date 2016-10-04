@@ -1,17 +1,34 @@
 package ru.dnsprice.com.check;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.google.gson.JsonArray;
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.impl.SessionFactoryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ru.dnsprice.com.dao.CityDAOImpl;
+import ru.dnsprice.com.model.City;
+import ru.dnsprice.com.model.User;
+import ru.dnsprice.com.service.CityServiceImpl;
+import ru.dnsprice.com.service.UserServiceImpl;
+import ru.dnsprice.com.utils.api.Compains;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shestakov.m on 04.10.2016.
  */
 public class check extends BCryptPasswordEncoder {
 
-    public static void main(String[] args) {
-        check ch = new check();
-        String f = ch.encode("2717843");
-        System.out.println(f);
-        System.out.println(ch.matches("sdfsdfsdf","$2a$10$PyWrsYmH5CiaXgqQsfbYk.Q3isfg/LHi17.5cusVtJYA0SPz8zps6"));
+
+    public static void main(String[] args) throws IOException {
 
     }
 }

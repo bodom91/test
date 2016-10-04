@@ -11,9 +11,11 @@ public interface UserDAO {
 
     public void addContact(User user);
 
-    public List<User> listContact();
+    public User getUserByName(String name);
 
     public void removeContact(Integer id);
+
+    public List<User> listContact();
 
     public boolean checkUser(User user);
 
