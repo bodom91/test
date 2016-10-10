@@ -41,6 +41,6 @@ public class AjaxController {
         for (City x : city) {
             cityService.addCity(x);
         }
-        return "<br>Next Random # is <b>";
+        return "<br>Refresh is Done<b>";
     }
 }

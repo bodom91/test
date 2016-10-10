@@ -29,6 +29,7 @@
                             <li class="active"><a href="<c:url value="/homepage"/>">Homepage</a></li>
                             <li><a href="<c:url value="/priceload"/>">Priceload</a></li>
                             <li><a href="<c:url value="/statistic"/>">Statistic</a></li>
+                            <li><a href="<c:url value="/city"/>">City</a></li>
                             <li><a href="<c:url value="/info"/>">Info</a></li>
                             <li><a href="<c:url value="/contact"/>">Contact</a></li>
                         </ul>
@@ -39,62 +40,64 @@
         </div>
     </div>
 </div>
+<form:form method="post" action="/priceload" modelAttribute="page">
 <div class="container">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="hero-unit">
-        <h4>Выбор города</h4>
+        <h4>Choose city</h4>
             <form:form modelAttribute="citych" method="post" action="/priceload">
                     <form:select path="id" onchange='if(this.value != 0) { this.form.submit(); }'>
                         <c:forEach items="${city2}" var="i">
-                                <option value="<c:out value="${i.getId()}"/>"><c:out value="${i.getDomain()}"/></option>
+                                <option
+                                        <c:if test="${i.getId() == citych.getId()}"> selected </c:if>
+                                         value="<c:out value="${i.getId()}"/>">
+                                    <c:out value="${i.getDomain().substring(0,i.getDomain().indexOf(\".\"))}"/>
+                                </option>
                         </c:forEach>
                     </form:select>
             </form:form>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-md-push-0">
         <h1>Goods Page</h1>
-        <table class="table table-hover">
+        <table class="table table-striped table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Domain</th>
-            <th>State</th>
-            <th>StateReason</th>
-            <th>StReasonCpa</th>
+            <th>id</th>
+            <th>name</th>
+            <th>bid</th>
+            <th>cbid</th>
         </tr>
         </thead>
             <tbody>
-                <c:forEach items="${city2}" var="i">
+                <c:forEach items="${goods}" var="good">
                     <tr>
-                        <td><c:out value="${i.getId()}"/></td>
-                        <td><a href="http://<c:out value="${i.getDomain()}"/>"/><c:out value="${i.getDomain()}"/> </a></td>
-                        <td><c:out value="${i.getState()}"/></td>
-                        <td><c:out value="${i.getStateReasons()}"/></td>
-                        <td><c:out value="${i.getStateReasonsCpa()}"/></td>
+                        <td><c:out value="${good.getId()}"/></td>
+                        <td><a href="<c:out value="${good.getUrl()}"/>" target="_blank"/><c:out value="${good.getName()}"/> </a></td>
+                        <td><c:out value="${good.getBid()}"/></td>
+                        <td><c:out value="${good.getCbid()}"/></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        <br>Thank you for your support.</p>
-    </div>
-    <div class="col-md-2">
-        <script type="text/javascript">
-            function refresh() {
-                $.ajax(
-                        {
-                            url:"ajaxRefreshCity",
-                            success: function (data) {
-                                $("#result").html(data);
-                            }
-                        }
-                );
-            }
-        </script>
-        <h3>Enter text</h3>
-        <input type="button" value="OK" onclick="refresh()">
-        <div id="result"></div>
+        <div class="col-md-6 col-md-offset-1">
+            <div class="col-md-3">
+                <h5>${pages} Pages..</h5>
+            </div>
+            <div class="col-xs-4">
+                <input type="text" name="page" class="form-control" placeholder="Page"/>
+            </div>
+            <div class="col-md-1">
+                <p><button type="submit" class="btn"/>Go</p>
+            </div>
+        </div>
     </div>
 </div>
+</form:form>
+<footer class="footer">
+<div class="container">
+    <span class="text-muted">Thank you for your support!</span>
+</div>
+</footer>
 </body>
 </html>

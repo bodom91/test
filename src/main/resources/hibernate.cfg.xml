@@ -8,5 +8,6 @@
     <session-factory>
         <mapping class="ru.dnsprice.com.model.User" />
         <mapping class="ru.dnsprice.com.model.City" />
+        <mapping class="ru.dnsprice.com.model.UserCity" />
     </session-factory>
 </hibernate-configuration>

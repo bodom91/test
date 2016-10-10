@@ -7,5 +7,7 @@ public class Data {
 
     public static String YANDEX = "https://api.partner.market.yandex.ru/";
     public static String COMPAINS = "v2/campaigns.json?";
+    public static String OFFERS = "/offers.json?";
+    public static String COMPAIGNS = "v2/campaigns/";
 
 }

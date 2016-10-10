@@ -27,6 +27,7 @@ User page
                             <li class="active"><a href="<c:url value="/homepage"/>">Homepage</a></li>
                             <li><a href="<c:url value="/priceload"/>">Priceload</a></li>
                             <li><a href="<c:url value="/statistic"/>">Statistic</a></li>
+                            <li><a href="<c:url value="/city"/>">City</a></li>
                             <li><a href="<c:url value="/info"/>">Info</a></li>
                             <li><a href="<c:url value="/contact"/>">Contact</a></li>
                         </ul>
