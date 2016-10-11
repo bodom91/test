@@ -26,7 +26,7 @@ public class FirstpageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView firstPage(@ModelAttribute ("user") User user) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("login", "user", new User());
         } else return new ModelAndView("homepage" , "user" , user);
     }
@@ -34,13 +34,14 @@ public class FirstpageController {
     @RequestMapping(value = "/homepage", method = RequestMethod.POST)
     public ModelAndView logincheck(@ModelAttribute("user") User user) {
         if (userService.checkUser(user)) {
+            user = userService.getUserByName(user.getName());
             return new ModelAndView("homepage", "user", user);
         } else return new ModelAndView("/error/404");
     }
 
     @RequestMapping(value = "/homepage", method = RequestMethod.GET)
     public ModelAndView homepage(@ModelAttribute("user") User user) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("/error/403" , "user" , user);
         } else return new ModelAndView("homepage" , "user" , user);
 

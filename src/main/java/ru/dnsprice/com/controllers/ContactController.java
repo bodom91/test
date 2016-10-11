@@ -23,7 +23,7 @@ public class ContactController {
 
     @RequestMapping (value = "/contact", method = RequestMethod.GET)
     public ModelAndView contact(@ModelAttribute ("user") User user) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         }
         return new ModelAndView("contact", "user", user);

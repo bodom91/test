@@ -28,8 +28,18 @@ public class UserCityDAOImpl implements UserCityDAO {
         }
     }
 
-    public List<UserCity> getList() {
-        return sessionFactory.getCurrentSession().createQuery("from UserCity")
+
+
+    public List<UserCity> getList(String name) {
+        return sessionFactory.getCurrentSession().createQuery("FROM UserCity WHERE name=:name").setParameter("name", name)
                 .list();
+    }
+
+    public void delUserCity(UserCity usercity) {
+        UserCity user = (UserCity) sessionFactory.getCurrentSession().createQuery("FROM UserCity WHERE name=:name AND city=:city")
+                .setParameter("name", usercity.getName()).setParameter("city", usercity.getCity()).uniqueResult();
+        if (null != user) {
+            sessionFactory.getCurrentSession().delete(user);
+        }
     }
 }

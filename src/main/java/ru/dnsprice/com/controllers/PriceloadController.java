@@ -1,7 +1,6 @@
 package ru.dnsprice.com.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.dnsprice.com.model.City;
 import ru.dnsprice.com.model.Goods;
 import ru.dnsprice.com.model.User;
+import ru.dnsprice.com.model.UserCity;
 import ru.dnsprice.com.service.CityService;
+import ru.dnsprice.com.service.UserCityService;
 import ru.dnsprice.com.utils.api.Compains;
 
 import javax.annotation.Resource;
@@ -37,23 +38,31 @@ public class PriceloadController {
     @Resource
     private Compains compains;
 
+    @Resource
+    private UserCityService userCityService;
+
     @RequestMapping(value = "/priceload", method = RequestMethod.GET)
     public ModelAndView controller(@ModelAttribute ("user") User user, Model model) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         } else {
             // Добавляем список городов на страницу
+            List<UserCity> userCities = userCityService.getList(user.getName());
             List<City> city = cityService.getList();
+            List<City> resultCity = new ArrayList<City>();
+            for (UserCity x : userCities) {
+                resultCity.add(cityService.getCity(x.getCity()));
+            }
             City city1 = city.get(0);
             model.addAttribute("citych", city1);
-            model.addAttribute("city2" , city);
+            model.addAttribute("city2" , resultCity);
             return new ModelAndView("priceload", "user", user);
         }
     }
 
     @RequestMapping(value = "/priceload", method = RequestMethod.POST)
     public ModelAndView getCity(@ModelAttribute ("user") User user, Model model,@ModelAttribute ("citych") City citych, String page) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         } else {
             // Добавляем товары на страницу
@@ -81,8 +90,13 @@ public class PriceloadController {
             model.addAttribute("goods" , listGoods);
             model.addAttribute("pages" , pagesCount);
             // Добавляем список городов на страницу
+            List<UserCity> userCities = userCityService.getList(user.getName());
             List<City> city = cityService.getList();
-            model.addAttribute("city2" , city);
+            List<City> resultCity = new ArrayList<City>();
+            for (UserCity x : userCities) {
+                resultCity.add(cityService.getCity(x.getCity()));
+            }
+            model.addAttribute("city2" , resultCity);
             model.addAttribute("citych", citych);
             System.out.println("all right");
             return new ModelAndView("priceload", "user", user);

@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="col-md-8 col-md-push-0">
-        <h1>Goods Page</h1>
+        <h1>Goods Page number ${page}</h1>
         <table class="table table-striped table-bordered">
         <thead>
         <tr>

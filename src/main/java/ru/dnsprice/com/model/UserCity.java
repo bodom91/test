@@ -10,6 +10,10 @@ import javax.persistence.*;
 public class UserCity {
 
     @Id
+    @Column(name = "id")
+    @GeneratedValue
+    private Integer id;
+
     @Column(name = "name")
     private String name;
 
@@ -31,4 +35,13 @@ public class UserCity {
     public void setCity(Integer city) {
         this.city = city;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }

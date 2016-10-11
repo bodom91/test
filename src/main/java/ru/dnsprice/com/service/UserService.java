@@ -17,4 +17,6 @@ public interface UserService {
 
     public boolean checkUser(User user);
 
+    public User getUserByName(String name);
+
 }

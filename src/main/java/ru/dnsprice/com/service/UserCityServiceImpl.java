@@ -26,7 +26,11 @@ public class UserCityServiceImpl implements UserCityService {
         userCityDAO.removeUserCity(id);
     }
     @Transactional
-    public List<UserCity> getList() {
-        return userCityDAO.getList();
+    public List<UserCity> getList(String name) {
+        return userCityDAO.getList(name);
+    }
+    @Transactional
+    public void delUserCity(UserCity usercity) {
+        userCityDAO.delUserCity(usercity);
     }
 }

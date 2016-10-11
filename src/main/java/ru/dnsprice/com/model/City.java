@@ -90,4 +90,20 @@ public class City {
     public void setStateReasonsCpa(List<String> stateReasonsCpa) {
         this.stateReasonsCpa = stateReasonsCpa;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof City)) return false;
+
+        City city = (City) o;
+
+        return id == city.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

@@ -39,4 +39,8 @@ public class UserServiceImpl implements UserService {
             return true;
         } else return false;
     }
+
+    public User getUserByName(String name) {
+        return userDAO.getUserByName(name);
+    }
 }

@@ -10,5 +10,6 @@ import java.util.List;
 public interface UserCityDAO {
     public void addUserCity(UserCity userCity);
     public void removeUserCity(Integer id);
-    public List<UserCity> getList();
+    public List<UserCity> getList(String name);
+    public void delUserCity(UserCity usercity);
 }

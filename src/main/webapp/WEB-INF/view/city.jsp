@@ -41,7 +41,7 @@
     </div>
 </div>
 <div class="container">
-    <form:form method="post" modelAttribute="check" action="/city">
+    <form:form>
 <div class="col-md-2">
     <script type="text/javascript">
         function refresh() {
@@ -59,7 +59,7 @@
     <input type="button" value="OK" onclick="refresh()">
     <div class=".m-x-auto" id="result"></div>
 </div>
-<div class="col-md-8">
+<div class="col-md-9">
     <h1>City Page</h1>
     <table class="table table-striped table-bordered">
         <thead>
@@ -70,6 +70,7 @@
             <th>State</th>
             <th>StateReason</th>
             <th>StReasonCpa</th>
+            <th><i class="glyphicon glyphicon-ok"></i></th>
         </tr>
         </thead>
         <tbody>
@@ -83,6 +84,9 @@
                 <td><c:out value="${i.getState()}"/></td>
                 <td><c:out value="${i.getStateReasons()}"/></td>
                 <td><c:out value="${i.getStateReasonsCpa()}"/></td>
+                <td>
+                    <c:if test="${userCity.contains(i)}"><i class="glyphicon glyphicon-ok"></i></c:if>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -90,7 +94,9 @@
     <br>Thank you for your support.</p>
 </div>
     <div class="col-md-1">
-        <p><button class="btn btn-primary" type="submit"/>Add City</p>
-    </div>
+        <p><button class="btn btn-primary" type="submit" formmethod="post" formaction="/city"/>Add City</p>
+        <p><button class="btn btn-primary" type="submit" formmethod="post" formaction="/citydelete"/>Del City</p>
     </form:form>
+    </div>
+
 </div>

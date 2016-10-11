@@ -34,30 +34,58 @@ public class CityController {
 
     @RequestMapping(value = "/city", method = RequestMethod.GET)
     public ModelAndView getCity(@ModelAttribute ("user") User user, Model model) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         } else {
-            List<UserCity> userCities = userCityService.getList();
+            List<UserCity> userCities = userCityService.getList(user.getName());
             List<City> city = cityService.getList();
+            List<City> resultCity = new ArrayList<City>();
+            for (UserCity x : userCities) {
+                resultCity.add(cityService.getCity(x.getCity()));
+            }
             String check = "";
-            model.addAttribute("userCity", userCities);
+            model.addAttribute("userCity", resultCity);
             model.addAttribute("check" , check);
             model.addAttribute("city", city);
         }
         return new ModelAndView("city" , "user", user);
     }
 
-    @RequestMapping(value = "city", method = RequestMethod.POST)
+    @RequestMapping(value = "/city", method = RequestMethod.POST)
     public ModelAndView addCity(@ModelAttribute ("user") User user, String check) {
-        if (user.getName() == null) {
+        if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         } else {
-            String[] id = check.split(",");
-            for (String x : id) {
-                UserCity userCity = new UserCity();
-                userCity.setName(user.getName());
-                userCity.setCity(Integer.valueOf(x));
-                userCityService.addUserCity(userCity);
+            if (check == null){
+                System.out.println("Check is NULL");
+            } else {
+                String[] id = check.split(",");
+                for (String x : id) {
+                    UserCity userCity = new UserCity();
+                    userCity.setName(user.getName());
+                    userCity.setCity(Integer.valueOf(x));
+                    userCityService.addUserCity(userCity);
+                }
+            }
+        }
+        return new ModelAndView("city", "user", user);
+    }
+
+    @RequestMapping(value = "/citydelete", method = RequestMethod.POST)
+    public ModelAndView removeCity(@ModelAttribute ("user") User user, String check) {
+        if (user.getUserid() == 0) {
+            return new ModelAndView("/error/403");
+        } else {
+            if (check == null) {
+                System.out.println("Check is NULL");
+            } else {
+                String[] id = check.split(",");
+                for (String d : id) {
+                    UserCity userCity = new UserCity();
+                    userCity.setName(user.getName());
+                    userCity.setCity(Integer.valueOf(d));
+                    userCityService.delUserCity(userCity);
+                }
             }
         }
         return new ModelAndView("city", "user", user);

@@ -15,8 +15,8 @@
 <div class="container">
 <form:form method="POST" modelAttribute="user" action="/homepage" class = "form-signin">
 	<h2 class="form-signin-heading">Please sign in</h2>
-	<form:input path="name" class = "form-control" placeholder="Name"/>
-	<form:input path="password" class = "form-control" placeholder="Password"/>
+	<form:input path="name" class = "form-control" placeholder="Name" required = "required"/>
+	<form:input path="password" class = "form-control" placeholder="Password" required = "required"/>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
 	<label>
 	<p class="message">Not registered? <a href="<c:url value="/registration"/>">Create an account</a></p>
