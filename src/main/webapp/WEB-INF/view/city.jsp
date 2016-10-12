@@ -28,6 +28,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="<c:url value="/homepage"/>">Homepage</a></li>
                             <li><a href="<c:url value="/priceload"/>">Priceload</a></li>
+                            <li><a href="<c:url value="/load"/>">LoadPrice</a></li>
                             <li><a href="<c:url value="/statistic"/>">Statistic</a></li>
                             <li><a href="<c:url value="/city"/>">City</a></li>
                             <li><a href="<c:url value="/info"/>">Info</a></li>

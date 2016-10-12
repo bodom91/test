@@ -28,6 +28,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="<c:url value="/homepage"/>">Homepage</a></li>
                             <li><a href="<c:url value="/priceload"/>">Priceload</a></li>
+                            <li><a href="<c:url value="/load"/>">LoadPrice</a></li>
                             <li><a href="<c:url value="/statistic"/>">Statistic</a></li>
                             <li><a href="<c:url value="/city"/>">City</a></li>
                             <li><a href="<c:url value="/info"/>">Info</a></li>
@@ -94,10 +95,10 @@
     </div>
 </div>
 </form:form>
-<footer class="footer">
-<div class="container">
-    <span class="text-muted">Thank you for your support!</span>
-</div>
+<footer class="navbar-fixed-bottom row-fluid">
+        <div class="container">
+            <span class="text-muted">Thank you for your support!</span>
+        </div>
 </footer>
 </body>
 </html>

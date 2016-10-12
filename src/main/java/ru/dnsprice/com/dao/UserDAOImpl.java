@@ -3,6 +3,7 @@ package ru.dnsprice.com.dao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.dnsprice.com.model.User;
 import ru.dnsprice.com.utils.ConvertPassToHash;
 
@@ -22,12 +23,14 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Transactional
     public void addContact(User user) {
         String hash = passToHash.encode(user.getPassword());
         user.setPassword(hash);
         sessionFactory.getCurrentSession().save(user);
     }
 
+    @Transactional
     public User getUserByName(String name) {
         User user = (User) sessionFactory.getCurrentSession().createQuery("from User where name=:name")
                 .setParameter("name",name).uniqueResult();
@@ -37,11 +40,13 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    @Transactional
     public List<User> listContact() {
         return sessionFactory.getCurrentSession().createQuery("from User")
                 .list();
     }
 
+    @Transactional
     public void removeContact(Integer id) {
         User user = (User) sessionFactory.getCurrentSession().load(
                 User.class, id);
@@ -50,6 +55,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Transactional
     public boolean checkUser(User user) {
         User userBD = getUserByName(user.getName());
         try {

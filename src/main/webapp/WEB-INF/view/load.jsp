@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +9,16 @@
     <spring:url value="/resources/css/starter-template.css" var="startertemplate"/>
     <link href="${bootstrap}" rel="stylesheet" />
     <link href="${startertemplate}" rel="stylesheet" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type = text/javascript src = "resources/js/jquery-3.1.1.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset = UTF-8">
     <title>
-        Contact
+        Load Price
     </title>
 </head>
 <body>
 <div class="container">
-    <header>
-        <h1>Price loader</h1>
+    <header >
+        <h1>Load Price</h1>
     </header>
     <div class="navbar-wrapper">
         <div class="container">
@@ -39,10 +42,28 @@
     </div>
 </div>
 <div class="container">
-    <div class="starter-template">
-        <h1>Contact</h1>
-        <p class="lead">You are login in our sites.<br> Thank you for your support.</p>
+
+    <div class="col-md-3">
+        <h4>Choose city</h4>
+        <form:form method="post" enctype="multipart/form-data" action="/loadprice" id="my">
+        <select name = "pages">
+                <c:forEach items="${city2}" var="i">
+                    <option
+                            <c:if test="${i.getId() == citych.getId()}"> selected </c:if>
+                            value="<c:out value="${i.getId()}"/>">
+                        <c:out value="${i.getDomain().substring(0,i.getDomain().indexOf(\".\"))}"/>
+                    </option>
+                </c:forEach>
+        </select>
     </div>
+    <div class="col-md-6">
+
+            File to upload:
+        <input type="file" name="file"><br/>
+        <button form="my" type="submit" value="Upload" />
+            Press here to upload the file!
+            <p>${filename}</p>
+    </div>
+    </form:form>
 </div>
 </body>
-</html>
