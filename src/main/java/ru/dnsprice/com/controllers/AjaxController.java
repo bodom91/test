@@ -73,11 +73,8 @@ public class AjaxController {
 
     @RequestMapping(value = "/loadprice", method = RequestMethod.POST)
     public ModelAndView loadprice (@RequestParam("file") MultipartFile file, @ModelAttribute ("user") User user,
-                                   Model model , @ModelAttribute ("citych") City citych, String select) {
+                                   Model model , @ModelAttribute ("citych") City citych) {
         String name = null;
-        if (select == null) {
-            System.out.println("FAIL");
-        }
         List<UserCity> userCities = userCityService.getList(user.getName());
         List<City> city = cityService.getList();
         List<City> resultCity = new ArrayList<City>();

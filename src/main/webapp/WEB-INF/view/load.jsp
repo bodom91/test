@@ -45,8 +45,8 @@
 
     <div class="col-md-3">
         <h4>Choose city</h4>
-        <form:form method="post" enctype="multipart/form-data" action="/loadprice" id="my">
-        <select name = "pages">
+        <form:form method="post" enctype="multipart/form-data" action="/loadprice" id="my" modelAttribute="citych">
+        <form:select path="id">
                 <c:forEach items="${city2}" var="i">
                     <option
                             <c:if test="${i.getId() == citych.getId()}"> selected </c:if>
@@ -54,7 +54,7 @@
                         <c:out value="${i.getDomain().substring(0,i.getDomain().indexOf(\".\"))}"/>
                     </option>
                 </c:forEach>
-        </select>
+        </form:select>
     </div>
     <div class="col-md-6">
 

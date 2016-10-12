@@ -37,7 +37,7 @@ public class LoadController {
     private CityService cityService;
 
     @RequestMapping(value = "/load" , method = RequestMethod.GET)
-    public ModelAndView getLoad(@ModelAttribute ("user") User user, Model model , @ModelAttribute ("citych") City citych, String select) {
+    public ModelAndView getLoad(@ModelAttribute ("user") User user, Model model , @ModelAttribute ("citych") City citych) {
         if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         } else {
@@ -54,10 +54,6 @@ public class LoadController {
                 City city1 = citych;
                 model.addAttribute("citych", city1);
             }
-            if (select == null) {
-                select = "3";
-            }
-            model.addAttribute("pages", select);
             model.addAttribute("city2" , resultCity);
             return new ModelAndView("load", "user", user);
         }
