@@ -1,6 +1,5 @@
 package ru.dnsprice.com.controllers;
 
-import com.sun.tracing.dtrace.Attributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,13 +9,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import ru.dnsprice.com.model.City;
 import ru.dnsprice.com.model.User;
-import ru.dnsprice.com.model.UserCity;
 import ru.dnsprice.com.service.CityService;
 import ru.dnsprice.com.service.UserCityService;
+import ru.dnsprice.com.utils.GetAvailableCity;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shestakov.m on 12.10.2016.
@@ -34,6 +31,9 @@ public class LoadController {
     private UserCityService userCityService;
 
     @Resource
+    private GetAvailableCity getAvailableCity;
+
+    @Resource
     private CityService cityService;
 
     @RequestMapping(value = "/load" , method = RequestMethod.GET)
@@ -41,20 +41,7 @@ public class LoadController {
         if (user.getUserid() == 0) {
             return new ModelAndView("/error/403");
         } else {
-            List<UserCity> userCities = userCityService.getList(user.getName());
-            List<City> city = cityService.getList();
-            List<City> resultCity = new ArrayList<City>();
-            for (UserCity x : userCities) {
-                resultCity.add(cityService.getCity(x.getCity()));
-            }
-            if (citych == null) {
-                City city1 = city.get(0);
-                model.addAttribute("citych", city1);
-            } else {
-                City city1 = citych;
-                model.addAttribute("citych", city1);
-            }
-            model.addAttribute("city2" , resultCity);
+            getAvailableCity.getCity(user, citych, model);
             return new ModelAndView("load", "user", user);
         }
     }

@@ -9,5 +9,6 @@ public class Data {
     public static String COMPAINS = "v2/campaigns.json?";
     public static String OFFERS = "/offers.json?";
     public static String COMPAIGNS = "v2/campaigns/";
+    public static String BIDS = "/bids.json";
 
 }

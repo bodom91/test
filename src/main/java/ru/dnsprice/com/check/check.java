@@ -20,6 +20,7 @@ import ru.dnsprice.com.model.UserCity;
 import ru.dnsprice.com.service.CityServiceImpl;
 import ru.dnsprice.com.service.UserServiceImpl;
 import ru.dnsprice.com.utils.api.Compains;
+import ru.dnsprice.com.utils.logic.ServiceClass;
 
 import java.io.IOException;
 import java.io.StringWriter;

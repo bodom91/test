@@ -50,11 +50,11 @@ public class Compains implements Reciever {
         return responseString;
     }
 
-    public JSONObject getGoods(String id, String page) {
+    public JSONObject getGoods(String id, String page, String countGoods) {
         String responseString = "";
         JSONObject object = new JSONObject();
         try {
-            HttpResponse response = HttpConnectionToApi.httpResponse(YANDEX + COMPAIGNS + id + OFFERS + "page=" + page + "&pageSize=100",
+            HttpResponse response = HttpConnectionToApi.httpResponse(YANDEX + COMPAIGNS + id + OFFERS + "page=" + page + "&pageSize=" + countGoods,
                     "AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8");
             HttpEntity enty = response.getEntity();
             responseString = EntityUtils.toString(enty, "UTF-8");

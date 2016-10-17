@@ -7,19 +7,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import ru.dnsprice.com.model.City;
+import ru.dnsprice.com.model.Goods;
 import ru.dnsprice.com.model.User;
 import ru.dnsprice.com.model.UserCity;
 import ru.dnsprice.com.service.CityService;
 import ru.dnsprice.com.service.UserCityService;
+import ru.dnsprice.com.utils.GetAvailableCity;
 import ru.dnsprice.com.utils.api.Compains;
+import ru.dnsprice.com.utils.logic.ReadXlsx;
+import ru.dnsprice.com.utils.logic.ServiceClass;
 
 import javax.annotation.Resource;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,6 +47,16 @@ public class AjaxController {
     @Resource
     private Compains compains;
 
+    @Resource
+    private GetAvailableCity getAvailableCity;
+
+    @Resource
+    private ServiceClass serviceClass;
+
+    @Resource
+    private ReadXlsx readXlsx;
+
+
     @RequestMapping(value = "/ajaxRefreshCity", method = RequestMethod.GET)
     public @ResponseBody String getCompain() {
         List<City> cityFromBD = cityService.getList();
@@ -63,43 +77,21 @@ public class AjaxController {
         return "<br>Refresh is Done<b>";
     }
 
-    @RequestMapping(value = "/pushprice", method = RequestMethod.POST)
-    public @ResponseBody String pushPrice(@RequestParam ("file") String filename,
-                                          @RequestParam ("city") City city)
-    {
-
-        return "Load Price DONE!";
-    }
 
     @RequestMapping(value = "/loadprice", method = RequestMethod.POST)
-    public ModelAndView loadprice (@RequestParam("file") MultipartFile file, @ModelAttribute ("user") User user,
+    public ModelAndView loadprice (@RequestParam("file") MultipartFile file,@RequestParam("city") String city , @ModelAttribute ("user") User user,
                                    Model model , @ModelAttribute ("citych") City citych) {
         String name = null;
-        List<UserCity> userCities = userCityService.getList(user.getName());
-        List<City> city = cityService.getList();
-        List<City> resultCity = new ArrayList<City>();
-        for (UserCity x : userCities) {
-            resultCity.add(cityService.getCity(x.getCity()));
-        }
-        if (citych == null) {
-            City city1 = city.get(0);
-            model.addAttribute("citych", city1);
-        } else {
-            City city1 = citych;
-            model.addAttribute("citych", city1);
-        }
-        model.addAttribute("city2" , resultCity);
+
+        getAvailableCity.getCity(user, citych, model);
 
         if (!file.isEmpty()) {
             try {
-
-
-
                 byte[] bytes = file.getBytes();
 
                 name = file.getOriginalFilename();
 
-                String rootPath = "C:\\path\\"; //try also "C:\path\"
+                String rootPath = "C:\\path\\";
                 File dir = new File(rootPath + File.separator + "loadFiles");
 
                 if (!dir.exists()) {
@@ -112,9 +104,33 @@ public class AjaxController {
                 stream.write(bytes);
                 stream.flush();
                 stream.close();
-                name = name.concat(" Uploaded");
-                model.addAttribute("filename" , name);
 
+                ArrayList<Goods> listGoods = serviceClass.getAll(city);
+                HashMap<String, String> ourPrice = readXlsx.Read(dir.getAbsolutePath() + File.separator + name);
+                ArrayList<String> resultFile = serviceClass.equalsArray(ourPrice, listGoods);
+                if (resultFile.size() < 500) {
+                    serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", resultFile);
+                } else {
+                    int count = (resultFile.size() / 500) + 1;
+                    int countO = 0;
+                    int countN = 0;
+                    for (int i = 1; i <= count; i++) {
+                        if (i == count) {
+                            countO = countO + i * 500;
+                            ArrayList<String> list = new ArrayList<String>();
+                            list.addAll(resultFile.subList(countN, resultFile.size() - 1));
+                            serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", list);
+                            countN += 500;
+                        } else {
+                            countO = countO + i * 500;
+                            ArrayList<String> list = new ArrayList<String>();
+                            list.addAll(resultFile.subList(countN, i * 500));
+                            serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", list);
+                            countN += 500;
+                        }
+                    }
+                }
+                uploadedFile.delete();
                 return new ModelAndView("load" , "user", user);
 
             } catch (Exception e) {

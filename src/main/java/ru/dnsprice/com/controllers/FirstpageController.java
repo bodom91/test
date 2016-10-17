@@ -28,7 +28,7 @@ public class FirstpageController {
     public ModelAndView firstPage(@ModelAttribute ("user") User user) {
         if (user.getUserid() == 0) {
             return new ModelAndView("login", "user", new User());
-        } else return new ModelAndView("homepage" , "user" , user);
+        } else return new ModelAndView("/homepage" , "user" , user);
     }
 
     @RequestMapping(value = "/homepage", method = RequestMethod.POST)

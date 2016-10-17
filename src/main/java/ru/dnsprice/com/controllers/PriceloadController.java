@@ -13,7 +13,9 @@ import ru.dnsprice.com.model.User;
 import ru.dnsprice.com.model.UserCity;
 import ru.dnsprice.com.service.CityService;
 import ru.dnsprice.com.service.UserCityService;
+import ru.dnsprice.com.utils.GetAvailableCity;
 import ru.dnsprice.com.utils.api.Compains;
+import ru.dnsprice.com.utils.logic.ServiceClass;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -34,6 +36,12 @@ public class PriceloadController {
 
     @Resource
     private CityService cityService;
+
+    @Resource
+    private ServiceClass serviceClass;
+
+    @Resource
+    private GetAvailableCity getAvailableCity;
 
     @Resource
     private Compains compains;
@@ -71,33 +79,18 @@ public class PriceloadController {
             }
             List<Goods> listGoods = new ArrayList<Goods>();
             ObjectMapper objectMapper = new ObjectMapper();
-            JSONObject jObjectPage = (JSONObject) compains.getGoods(String.valueOf(citych.getId()),page);
+            JSONObject jObjectPage = (JSONObject) compains.getGoods(String.valueOf(citych.getId()),page, "100");
             JSONObject objPager = (JSONObject) jObjectPage.get("pager");
             JSONArray arrayOffers = (JSONArray) jObjectPage.get("offers");
             //Получаем количество страниц
             String pagesCount = String.valueOf(objPager.get("pagesCount"));
             //ПОлучаем список товаров
-            for (Object goods : arrayOffers) {
-                Goods good = null;
-                try {
-                    good = objectMapper.readValue(goods.toString(), Goods.class);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                listGoods.add(good);
-            }
+            serviceClass.parseGoods(arrayOffers,listGoods);
             model.addAttribute("page" , page);
             model.addAttribute("goods" , listGoods);
             model.addAttribute("pages" , pagesCount);
             // Добавляем список городов на страницу
-            List<UserCity> userCities = userCityService.getList(user.getName());
-            List<City> city = cityService.getList();
-            List<City> resultCity = new ArrayList<City>();
-            for (UserCity x : userCities) {
-                resultCity.add(cityService.getCity(x.getCity()));
-            }
-            model.addAttribute("city2" , resultCity);
-            model.addAttribute("citych", citych);
+            getAvailableCity.getCity(user, citych, model);
             System.out.println("all right");
             return new ModelAndView("priceload", "user", user);
         }

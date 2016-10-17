@@ -44,26 +44,32 @@
 <div class="container">
 
     <div class="col-md-3">
-        <h4>Choose city</h4>
-        <form:form method="post" enctype="multipart/form-data" action="/loadprice" id="my" modelAttribute="citych">
-        <form:select path="id">
-                <c:forEach items="${city2}" var="i">
-                    <option
-                            <c:if test="${i.getId() == citych.getId()}"> selected </c:if>
-                            value="<c:out value="${i.getId()}"/>">
-                        <c:out value="${i.getDomain().substring(0,i.getDomain().indexOf(\".\"))}"/>
-                    </option>
-                </c:forEach>
-        </form:select>
+
     </div>
     <div class="col-md-6">
-
-            File to upload:
-        <input type="file" name="file"><br/>
-        <button form="my" type="submit" value="Upload" />
-            Press here to upload the file!
-            <p>${filename}</p>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Fileload</th>
+                    <th>Submit</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${city2}" var="i">
+                <form:form method="post" action="loadprice" enctype="multipart/form-data">
+                <tr>
+                    <input name="city" type="hidden" value="${i.getId()}"/>
+                    <td><c:out value="${i.getDomain().substring(0,i.getDomain().indexOf(\".\"))}"></c:out></td>
+                    <td><input type="file" name="file"><br/></td>
+                    <td><input type="submit" value="Upload" class="btn btn-primary"/></td>
+                    <td>No</td>
+                </tr>
+                </form:form>
+            </c:forEach>
+            </tbody>
+            </table>
     </div>
-    </form:form>
 </div>
 </body>

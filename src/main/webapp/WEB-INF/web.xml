@@ -5,7 +5,9 @@
         <servlet-name>action</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
     </servlet>
+
 
     <servlet-mapping>
         <servlet-name>action</servlet-name>
@@ -17,6 +19,8 @@
         <error-code>404</error-code>
         <location>/error/404</location>
     </error-page>
+
+
 
     <!--Добавляем фильтр безопасности для всего приложения  (прочитать)-->
     <!--<filter>-->
