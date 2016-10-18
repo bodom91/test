@@ -79,7 +79,7 @@ public class AjaxController {
 
 
     @RequestMapping(value = "/loadprice", method = RequestMethod.POST)
-    public ModelAndView loadprice (@RequestParam("file") MultipartFile file,@RequestParam("city") String city , @ModelAttribute ("user") User user,
+    public @ResponseBody String loadprice (@RequestParam("file") MultipartFile file,@RequestParam("city") String city , @ModelAttribute ("user") User user,
                                    Model model , @ModelAttribute ("citych") City citych) {
         String name = null;
 
@@ -131,15 +131,16 @@ public class AjaxController {
                     }
                 }
                 uploadedFile.delete();
-                return new ModelAndView("load" , "user", user);
+                String result ="<i class=\"glyphicon glyphicon-ok \"></i>";
+                return result;
 
             } catch (Exception e) {
                 model.addAttribute("filename", new String("FAIL"));
-                return new ModelAndView("load" ,"user", user);
+                return "FAIL";
             }
         } else {
             model.addAttribute("filename", new String("FILE EMPTY"));
-            return new ModelAndView("load" , "user", user);
+            return "FILE EMPTY";
         }
     }
 }

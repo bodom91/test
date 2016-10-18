@@ -89,7 +89,7 @@ public class ServiceClass {
         try {
         HttpClient httpClient = HttpConnectionToApi.getConnection();
         HttpPut httpPut = HttpConnectionToApi.httpPut(codeShop, token, id);
-            httpPut.addHeader(new BasicHeader("Content-Type", "application/json"));
+        httpPut.addHeader(new BasicHeader("Content-Type", "application/json"));
         StringEntity enity = new StringEntity(load, "UTF-8");
         httpPut.setEntity(enity);
         HttpResponse response = httpClient.execute(httpPut);
