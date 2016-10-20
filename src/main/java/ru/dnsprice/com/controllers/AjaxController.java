@@ -82,6 +82,7 @@ public class AjaxController {
     public @ResponseBody String loadprice (@RequestParam("file") MultipartFile file,@RequestParam("city") String city , @ModelAttribute ("user") User user,
                                    Model model , @ModelAttribute ("citych") City citych) {
         String name = null;
+        String nameOut = null;
 
         getAvailableCity.getCity(user, citych, model);
 
@@ -90,15 +91,16 @@ public class AjaxController {
                 byte[] bytes = file.getBytes();
 
                 name = file.getOriginalFilename();
+                nameOut = file.getOriginalFilename().substring(0, file.getOriginalFilename().length()-5);
 
-                String rootPath = "C:\\path\\";
-                File dir = new File(rootPath + File.separator + "loadFiles");
+                //String rootPath = "Files";
+                File dir = new File(File.separator + "loadFiles");
 
-                if (!dir.exists()) {
+                /*if (!dir.exists()) {
                     dir.mkdirs();
-                }
+                }*/
 
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
+                File uploadedFile = new File(File.separator + name);
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
                 stream.write(bytes);
@@ -106,10 +108,11 @@ public class AjaxController {
                 stream.close();
 
                 ArrayList<Goods> listGoods = serviceClass.getAll(city);
-                HashMap<String, String> ourPrice = readXlsx.Read(dir.getAbsolutePath() + File.separator + name);
+                HashMap<String, String> ourPrice = readXlsx.Read(File.separator + name);
                 ArrayList<String> resultFile = serviceClass.equalsArray(ourPrice, listGoods);
+                String response = "";
                 if (resultFile.size() < 500) {
-                    serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", resultFile);
+                    response = response + serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", resultFile);
                 } else {
                     int count = (resultFile.size() / 500) + 1;
                     int countO = 0;
@@ -119,28 +122,30 @@ public class AjaxController {
                             countO = countO + i * 500;
                             ArrayList<String> list = new ArrayList<String>();
                             list.addAll(resultFile.subList(countN, resultFile.size() - 1));
-                            serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", list);
+                            response = response + serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", list);
                             countN += 500;
                         } else {
                             countO = countO + i * 500;
                             ArrayList<String> list = new ArrayList<String>();
                             list.addAll(resultFile.subList(countN, i * 500));
-                            serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", list);
+                            response = response + serviceClass.loadPrice(city,"AQAAAAAW7HREAAND_oJ25b48yEpylzgd3Rjrzrk","9ad1fe90a69d4725bae74396f1b52ae8", list);
                             countN += 500;
                         }
                     }
                 }
                 uploadedFile.delete();
-                String result ="<i class=\"glyphicon glyphicon-ok \"></i>";
+                String path = File.separator + nameOut + ".txt";
+                FileWriter fw = new FileWriter(path,false);
+                fw.write(response);
+                fw.close();
+                String result ="<a href=\"" + path + "\"" + " download ><i class=\"glyphicon glyphicon-ok \"></i> </a>";
                 return result;
 
             } catch (Exception e) {
-                model.addAttribute("filename", new String("FAIL"));
-                return "FAIL";
+                return "<br>FAIL</br>";
             }
         } else {
-            model.addAttribute("filename", new String("FILE EMPTY"));
-            return "FILE EMPTY";
+            return "<br>FILE EMPTY</br>";
         }
     }
 }

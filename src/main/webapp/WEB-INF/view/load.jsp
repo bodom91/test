@@ -46,12 +46,9 @@
 <div class="container">
     <script type="text/javascript">
         function load(String) {
-
             var m = "#" + String;
             var res = "#" + String + "me";
             document.getElementById(String + "me").innerHTML="<i class=\"glyphicon glyphicon-arrow-down\"></i>";
-            $('#result').html('');
-
             $(m).ajaxForm({
                 success:function(data) {
                     $(res).html(data);

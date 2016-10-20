@@ -83,9 +83,9 @@ public class ServiceClass {
     }
 
     //Заливка ставок
-    public void loadPrice(String codeShop, String token, String id, ArrayList<String> offers) {
+    public String loadPrice(String codeShop, String token, String id, ArrayList<String> offers) {
         String load = getJsonPut(offers);
-        String responseString = "NULL";
+        String responseString = "";
         try {
         HttpClient httpClient = HttpConnectionToApi.getConnection();
         HttpPut httpPut = HttpConnectionToApi.httpPut(codeShop, token, id);
@@ -94,11 +94,14 @@ public class ServiceClass {
         httpPut.setEntity(enity);
         HttpResponse response = httpClient.execute(httpPut);
         HttpEntity resp = response.getEntity();
-        responseString = EntityUtils.toString(resp, "UTF-8");
+        String h  = EntityUtils.toString(resp, "UTF-8");
+            responseString = responseString + "Залито 500 ";
             System.out.println("Залито");
+            return responseString;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(responseString);
+            return responseString;
         }
     }
 
