@@ -1,6 +1,7 @@
 package ru.dnsprice.com.utils.logic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.xml.internal.serialize.LineSeparator;
 import org.apache.http.HttpConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -95,7 +96,7 @@ public class ServiceClass {
         HttpResponse response = httpClient.execute(httpPut);
         HttpEntity resp = response.getEntity();
         String h  = EntityUtils.toString(resp, "UTF-8");
-            responseString = responseString + "Залито 500 ";
+            responseString = responseString + "Залито 500" + System.getProperty("line.separator");
             System.out.println("Залито");
             return responseString;
         } catch (IOException e) {
@@ -110,7 +111,12 @@ public class ServiceClass {
         ArrayList<String> finalbids = new ArrayList();
         for (int i = 0; i < yandexPrice.size(); i++) {
             if (ourPrice.containsKey(yandexPrice.get(i).getId())) {
-                String bid = ourPrice.get(yandexPrice.get(i).getId()).substring(0,4);
+                String bid = "";
+                try {
+                    bid = ourPrice.get(yandexPrice.get(i).getId()).substring(0, 4);
+                } catch (StringIndexOutOfBoundsException e) {
+                    bid = ourPrice.get(yandexPrice.get(i).getId()).substring(0, 3);
+                }
                 finalbids.add(yandexPrice.get(i).getId() + " " + bid + " " + bid);
             }
         }
